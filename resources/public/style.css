@@ -1,0 +1,187 @@
+
+html{
+	height:100%
+}
+.first
+{
+	visibility: hidden;
+}
+.content{
+	background-image: url("/images/background.jpg") ;
+	background-size:cover;
+
+}
+.middle{
+	padding-bottom:50px
+}
+
+#reg-form{
+	margin-top:5%;
+}
+#reg-title{
+	color:#777;
+	margin-top:7%
+}
+#like{
+	background-image: url("/images/like.png") ;
+	background-size: 100% 100%;
+    width: 28px;
+    background-repeat-x: no-repeat;
+}
+#dislike{
+	background-image: url("/images/dislike.png") ;
+	background-size: 100% 100%;
+    width: 28px;
+    background-repeat-x: no-repeat;
+}
+.border-div{
+	 border-radius: 25px;
+    border: 1px solid #46b8da;
+    width:100%;
+    padding-bottom:5%;
+    margin-top:15%
+}
+#login-form{
+	margin-top:5%;
+}
+
+#txt-area{
+	height:200px
+
+}
+
+.title{
+	color: #555
+}
+#search-form{
+	margin-top:5px
+
+}
+
+#button-image{
+
+	background-image: url("/images/search.png");
+	background-size:100% 100%
+}
+.user{
+	font-style:italic;
+	color: #999
+
+}
+#recipe{
+
+	background-color:transparent;
+	border:none
+
+
+}
+.comments{
+	border: 2px dashed #777;
+    border-radius: 10px ;
+    background-color: transparent;
+    margin-top:20px;
+
+}
+#txt-area-2{
+
+    	border: 2px dashed #777;
+		 border-radius: 15px 60px;
+		 background-color:transparent;
+}
+.form-btn{
+	margin-top:20px;
+	display:inline;
+	    margin-left: 10px
+}
+.message{
+	margin-top:10px
+
+}
+
+.reg-label{
+	color:#777
+
+}
+.font-head{
+	font-weight:bold;
+	color:#555;
+	font-family:Lucida Calligraphy;
+	letter-spacing: 2px ;
+	font-size:x-large
+}
+#recommended-div-1{
+	border: 2px dashed #777;
+	border-radius:10px;
+	margin-top:10px"
+
+}
+.table-st{
+	width:100%;
+}
+.td-2{
+	color: #555;
+	font-style:italic
+}
+.td-1{
+	color: #555;
+	font-weight:bold
+}
+.td-st{
+	height:100px ;
+	 border-top: 2px dashed #46b8da;
+	  border-bottom: 2px dashed #46b8da
+}
+.recipes-containter{
+	width:75% ;
+	margin:auto
+}
+#recommended-div-2{
+	font-style:italic ;
+	 font-size:medium
+}
+#comment-field{
+	margin-left:-5px;
+	margin-bottom:10px
+}
+#font-label{
+	font-style:italic
+}
+#text-field{
+	margin-left:-20px
+}
+#comment-form{
+	margin-top:20px
+}
+
+#like-div {
+	margin-top:20px;
+	 margin-left:44%
+}
+.wrapper{
+	min-height:100%;
+	position:relative;
+	background-image: url("/images/background.jpg") ;
+	background-size:cover;
+}
+.fixed-footer{
+	width: 100%;
+	height: 50px;
+	position: absolute;
+	bottom: 0;
+	background-color:#F8F8F8;
+	border:1px solid  transparent;
+	border-color:#E7E7E7;
+	border-radius: 5px;
+
+
+}
+#off-padding{
+	padding-left:0px !important;
+	padding-right:0px !important
+
+}
+
+#footer-txt{
+	color:#777;
+	text-align: center
+}

@@ -5,6 +5,7 @@
             [hiccup.core :refer [html]]))
 
 
+
  (defn make-row [grocery]
   (html [:tr [:td (:id grocery)] [:td (:name grocery)] [:td (:calper100g grocery)] [:td [:a {:href (str "/groceries/" (:id grocery))} [:button {:style "background-color:#ffcc00; width:100%;"} "View"]]]]))
 
@@ -24,6 +25,8 @@
           "align-items: center;\n  background-color: #FFFFFF;\n  border: 1px solid rgba(0, 0, 0, 0.1);\n  border-radius: .25rem;\n  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;\n  box-sizing: border-box;\n  color: rgba(0, 0, 0, 0.85);\n  display: inline-flex;\n  font-size: 16px;\n  font-weight: 600;\n  justify-content: center;\n      width:30%;"}
          "ADD NEW"]
        ))
+
+
 (defn grocery-view [grocery]
   (html [:p
          {:style "text-align: center;"}
@@ -61,8 +64,7 @@
            "margin-left: 48em; width:20%;justify-content: center;align-items: center;\n  padding: 6px 14px;\n  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;\n  border-radius: 6px;\n  border: none;\n  background: #6E6D70;\n  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);\n  color: #DFDEDF;\n  user-select: none;"}
           "DELETE"]]
         [:p [:br]]))
-(defn grocery-add-new-view []
-  (html ))
+(
 
 (defroutes handler
 
@@ -72,6 +74,7 @@
            (GET "/groceries/:id" [id] (grocery-view (nth (get-groceries) (- (read-string id) 1)))))
 
 (jetty/run-jetty (fn [req] (handler req)) {:port 3002 :join? false})
+
 
 
 
