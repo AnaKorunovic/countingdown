@@ -1,5 +1,5 @@
 (ns logic.logic
-  )
+  (:require [clojure.data.csv :as csv]))
 
 
 ;Men: BMR = 66 + (13.7 x wt in kg) + (5 x ht in cm) - (6.8 x age in years)
@@ -31,5 +31,6 @@
 ;1g uh/p=4kcal  1g f=9kcal
 (defn calculate-percentage [cal]
   {:uh  (int (/ (* cal 0.4) 4)) :p (int (/ (* cal 0.3) 4)) :f (int (/ (* cal 0.3) 9))})
+
 
 

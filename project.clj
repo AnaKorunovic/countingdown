@@ -8,6 +8,8 @@
                  [ring/ring-jetty-adapter "1.9.6"]
                  [hiccup "1.0.5"]
                  [org.clojure/java.jdbc "0.7.12"]
+                 [org.clojure/data.csv "1.0.1"]
+                 [csv-map "0.1.1"]
                  [mysql/mysql-connector-java "8.0.30"]]
   :repl-options {:init-ns countingdown.core}
   :main countingdown.main)

@@ -28,7 +28,7 @@
   [:nav.navbar.navbar-default
    [:div.container-fluid
     [:div.navbar-header
-     [:a.navbar-brand {:href "#"} "My meal planner"]
+     [:a.navbar-brand {:href "#"} "PlanCookEat"]
      ]
     [:ul.nav.navbar-nav
      [:li.active [:a {:href "/"} "Home" ]]
@@ -65,7 +65,7 @@
   "footer"
   [:footer.fixed-footer
    [:div {:id "off-padding"}
-    [:h4#footer-txt "Keep me fit"]
+    [:h4#footer-txt "PlanCookEat"]
     ]
    ]
   )
