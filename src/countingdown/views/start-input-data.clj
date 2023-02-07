@@ -5,7 +5,7 @@
 
 (defn get-data-page []
   "get data and print report"
-  (vutil/common "First page"
+  (vutil/common "Home page"
                  (vutil/navbar)
                  (form/form-to  {:role "form" :id "first-form" :class "form-horizontal"}[:GET "/new"]
                                 [:div {:class "form-group"}
@@ -20,7 +20,7 @@
                                 [:br]
                                 (form/submit-button {:class "btn btn-info col-md-offset-6"} "Generate"))
                 ;..
-                 (vutil/footer)
+
                  ))
 
 ;..

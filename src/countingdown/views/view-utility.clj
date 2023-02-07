@@ -14,7 +14,7 @@
              "width=device-width, initial-scale=1, maximum-scale=1"}]
      [:title title]
      (h/include-css "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-                    "/style.css"  )
+                    "../style.css"  )
      ]
 
     [:body {:style "height:100%"}
@@ -28,7 +28,7 @@
   [:nav.navbar.navbar-default
    [:div.container-fluid
     [:div.navbar-header
-     [:a.navbar-brand {:href "#"} "PlanCookEat"]
+     [:a.navbar-brand {:href "/"} "PlanCookEat"]
      ]
     [:ul.nav.navbar-nav
      [:li.active [:a {:href "/"} "Home" ]]
@@ -61,11 +61,3 @@
 ;...
 
 
-(defn footer []
-  "footer"
-  [:footer.fixed-footer
-   [:div {:id "off-padding"}
-    [:h4#footer-txt "PlanCookEat"]
-    ]
-   ]
-  )
