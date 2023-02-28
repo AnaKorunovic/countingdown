@@ -31,7 +31,8 @@
      [:a.navbar-brand {:href "/"} "PlanCookEat"]
      ]
     [:ul.nav.navbar-nav
-     [:li.active [:a {:href "/"} "Home" ]]
+     [:li.active [:a {:href "/food"} "FoodBase" ]]
+     [:li.active [:a {:href "/recipes"} "Recipes" ]]
      ;another links
      ]
     ;...

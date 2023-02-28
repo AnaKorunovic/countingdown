@@ -28,14 +28,23 @@
   )
 
 
+
+
 ;40UH 30Protein 30Fats
 ;1g uh/p=4kcal  1g f=9kcal
 (defn calculate-percentage [cal]
   {:uh (int (/ (* cal 0.4) 4)) :p (int (/ (* cal 0.3) 4)) :f (int (/ (* cal 0.3) 9))})
 
+(defn get-report [age gender height weight activity]
+  (let [cal (calculate-calorie-intake age gender height weight activity) ]
+    {:total-calories cal
+     :nutrient-percentage (logic.logic/calculate-percentage cal)})
+  )
+
+
 ;filter, sorting, random functions
-(defn filter-by-group [data group]
-  (filter #(= (:FoodGroup %) group) data))
+(defn filter-by-group [group]
+  (filter #(= (:FoodGroup %) group) csv/data))
 
 (defn filter-by-calorie-range [data min max]
   (filter #(and (> (read-string (:Calories %)) min) (< (read-string (:Calories %)) max)) data))
@@ -43,19 +52,20 @@
 (defn filter-by-calorie-max [data max]
   (filter #(< (read-string (:Calories %)) max) data))
 
+(defn get-random-by-group [group]
+  (take 1 (random-sample 0.1 (filter-by-group csv/data group)))
+  )
+
+(defn get-random-by-group-15 [group]
+  (take 15 (random-sample 0.1 (filter-by-group csv/data group)))
+  )
+
 
 (defn filter-by-group-kcal-range [data group kcal-min kcal-max]
-  (filter-by-calorie-range (filter-by-food-group data group) kcal-min kcal-max))
-
-
-(defn get-random-by-group [group]
-  (take 1 (random-sample 0.1 (filter-by-group (csv/get-csv-data) group)))
-  )
+  (filter-by-calorie-range (filter-by-group data group) kcal-min kcal-max))
 
 (defn sort-desc [data]
   (sort-by :Calories data))
-
-
 
 ;parsing id to integer
 (defn parse-int [s]
@@ -65,11 +75,11 @@
   (update data :ID (5)))
 
 (defn get-all-data []
-  (csv/get-csv-data) )
+ csv/data )
 
 (defn get-data []
-  (take 5 (csv/get-csv-data) ))
-
+  (take 10 csv/data ))
+(get-all-data)
 
 
 
@@ -96,6 +106,14 @@
 
 (filter-by-group-kcal-range (csv/get-csv-data) "Prepared Meals" 300 600)
 (calculate-percentage (* 0.4 2000))
+(time (csv/get-csv-data)) ;
+(time csv/data)           ;manje vremena treba da se ucita
+(time (get-random-by-group-15 "Egg") )                      ;12.123msec
+; manjam poziv funkcije za ATOM
+(time (get-random-by-group-15 "Egg"))                       ;2.43msec
+(get-random-by-group "Egg")                                 ;Definisanjem data u logic ubrzalo se ucitavanje tabela
+
+
 
 
 ;If you eat three meals a day, you should consume:

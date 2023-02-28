@@ -4,7 +4,7 @@
             [ring.adapter.jetty :as jetty]
             [hiccup.core :refer [html]]))
 
-
+; stara verzija - nije validno
 
  (defn make-row [grocery]
   (html [:tr [:td (:id grocery)] [:td (:name grocery)] [:td (:calper100g grocery)] [:td [:a {:href (str "/groceries/" (:id grocery))} [:button {:style "background-color:#ffcc00; width:100%;"} "View"]]]]))

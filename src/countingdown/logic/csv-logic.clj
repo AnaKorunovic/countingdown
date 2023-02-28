@@ -18,6 +18,7 @@
        (rest (read-csv "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\MyFoodData1.csv")))
   )
 
+(def data (get-csv-data))
 
 ;(defn cast-calories [map]
 ;  (assoc map :Calories (read-string (:Calories map)))
