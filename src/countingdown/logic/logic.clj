@@ -13,8 +13,8 @@
 ;                               marathon, or triathlon, etc.
 
 (defn calculate-bmi [age gender height weight]
-  (if (= gender "men") (int (- (+ 66 (* 13.7 weight) (* 5 height)) (* 6.8 age)))
-                       (int (- (+ 655 (* 9.6 weight) (* 1.8 height)) (* 4.7 age))))
+  (if (= gender "men") (- (+ 66 (* 13.7 weight) (* 5 height)) (* 6.8 age))
+                       (- (+ 655 (* 9.6 weight) (* 1.8 height)) (* 4.7 age)))
   )
 
 (defn calculate-calorie-intake [age gender height weight activity]
@@ -49,20 +49,24 @@
 (defn filter-by-calorie-range [data min max]
   (filter #(and (> (read-string (:Calories %)) min) (< (read-string (:Calories %)) max)) data))
 
-(defn filter-by-calorie-max [data max]
-  (filter #(< (read-string (:Calories %)) max) data))
+(defn filter-by-calorie-max [max]
+  (filter #(< (read-string (:Calories %)) max) csv/data))
 
 (defn get-random-by-group [group]
-  (take 1 (random-sample 0.1 (filter-by-group csv/data group)))
+  (take 1 (random-sample 0.1 (filter-by-group  group)))
   )
+
+
 
 (defn get-random-by-group-15 [group]
-  (take 15 (random-sample 0.1 (filter-by-group csv/data group)))
+  (take 15 (random-sample 0.1 (filter-by-group  group)))
   )
 
 
-(defn filter-by-group-kcal-range [data group kcal-min kcal-max]
-  (filter-by-calorie-range (filter-by-group data group) kcal-min kcal-max))
+(defn filter-by-group-kcal-range [group kcal-min kcal-max]
+  (filter-by-calorie-range (filter-by-group group) kcal-min kcal-max))
+
+
 
 (defn sort-desc [data]
   (sort-by :Calories data))
@@ -70,6 +74,7 @@
 ;parsing id to integer
 (defn parse-int [s]
   (Integer. (re-find  #"\d+" s )))
+
 
 (defn make-key-integer [data]
   (update data :ID (5)))
@@ -81,8 +86,6 @@
   (take 10 csv/data ))
 (get-all-data)
 
-
-
 ;(defn get-random-by-group-01 [group]
 ;(take 1 (random-sample 0.01 (filter-by-group (csv/get-csv-data) group)))
 ;)
@@ -90,11 +93,6 @@
 ;(time (get-random-by-group "Egg"))
 ;(time (get-random-by-group-01 "Egg"))                       ;small difference in time - results are different each time
 
-(defn make-breakfast [calories]
-(let [egg (get-random-by-group "Egg") baked-foods (get-random-by-group "Baked Foods")]
-
-  )
-  )
 
 
 
@@ -113,9 +111,16 @@
 (time (get-random-by-group-15 "Egg"))                       ;2.43msec
 (get-random-by-group "Egg")                                 ;Definisanjem data u logic ubrzalo se ucitavanje tabela
 
+;*****************CREATION PERSONAL MEALS FROM DATABASE FOOD******************************
+(defn add-new-meal [data]
+  (let [row (str (:Name data) "," (:Calories data))]
+    (csv/add-data-to-csv "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\Recepies.csv" row))
+  )
 
 
 
+
+;****************GENERATION MENU**********************************************************
 ;If you eat three meals a day, you should consume:
 ;
 ;30-35% of daily calories for breakfast (0.3-0.35)->0.3
@@ -135,6 +140,12 @@
 ;5-10% of daily calories for an afternoon snack ->0.05
 ;15-20% of daily calories for dinner ->0.2
 
+
+(defn make-breakfast [calories]
+  (let [egg (get-random-by-group "Egg") baked-foods (get-random-by-group "Baked Foods")]
+
+    )
+  )
 
 
 

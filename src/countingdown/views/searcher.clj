@@ -20,6 +20,12 @@
                  [:a {:href "http://localhost:3002/food/Snacks", :class "btn btn-default"} "Snacks"]
                  [:a {:href "http://localhost:3002/food/Vegetables", :class "btn btn-default"} "Vegetables"]
                  ]
+                [:div {:class "m-5 pb-5 container", :style "margin-top:1em;"}
+                 [:div
+                  [:form {:action "/search" :method "POST"}
+                   [:label {:for "maxCal"} "Max Calories:"]
+                   [:input {:type "number", :id "maxCal", :name "maxCal"}]
+                   [:input {:type "submit"}]]]]
 
                 [:div {:class "m-5 pb-5 container", :style "margin-top:2em;"}
                  [:table {:class "table table-bordered"}

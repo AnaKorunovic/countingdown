@@ -12,13 +12,21 @@
         (slurp)
         (csv/parse-csv))))
 
-(defn get-csv-data []
-  (map #(-> (zipmap (first (read-csv "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\MyFoodData1.csv")) %)
-            (walk/keywordize-keys))
-       (rest (read-csv "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\MyFoodData1.csv")))
+(defn add-data-to-csv [location data]
+  (with-open [w (io/writer  location :append true)]
+    (.write w (str "\n" data)))
   )
 
-(def data (get-csv-data))
+
+(defn get-csv-data [location]
+  (map #(-> (zipmap (first (read-csv location)) %)
+            (walk/keywordize-keys))
+       (rest (read-csv location)))
+  )
+
+(def data (get-csv-data "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\MyFoodData1.csv"))
+
+
 
 ;(defn cast-calories [map]
 ;  (assoc map :Calories (read-string (:Calories map)))

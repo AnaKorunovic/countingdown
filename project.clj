@@ -6,10 +6,12 @@
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [compojure "1.7.0"]
                  [ring/ring-jetty-adapter "1.9.6"]
+                 [ring "1.9.6"]
                  [hiccup "1.0.5"]
                  [org.clojure/java.jdbc "0.7.12"]
                  [org.clojure/data.csv "1.0.1"]
                  [csv-map "0.1.1"]
+                 [clj-pdf "2.6.2"]
                  [mysql/mysql-connector-java "8.0.30"]]
   :repl-options {:init-ns countingdown.core}
   :main countingdown.main)

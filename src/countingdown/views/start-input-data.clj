@@ -7,40 +7,56 @@
   "get data and print report"
   (vutil/common "Home page"
                  (vutil/navbar)
-                 (form/form-to  {:role "form" :id "first-form" :class "form-horizontal"}[:POST "/report"]
-                                [:div {:class "form-group"}
-                                 (form/label {:class "reg-label control-label col-md-2"} "age" "Age:")
-                                 [:div.col-md-9
-                                  (form/text-field  {:class "form-control" :required "required" } :age "33")]]
-                                [:br]
-                                [:div {:class "form-group"}
-                                 (form/label {:class "reg-label control-label col-md-2"} "gender" "Gender:")
-                                 [:div.col-md-9
-                                  (form/text-field { :id "txt-area" :class "form-control"  :required "required" } :gender "men")]]
-                                [:br]
-                                [:div {:class "form-group"}
-                                 (form/label {:class "reg-label control-label col-md-2"} "height" "Height:")
-                                 [:div.col-md-9
-                                  (form/text-field  {:class "form-control" :required "required" } :height "188")]]
-                                [:br]
-                                [:div {:class "form-group"}
-                                 (form/label {:class "reg-label control-label col-md-2"} "weight" "weight:")
-                                 [:div.col-md-9
-                                  (form/text-field  {:class "form-control" :required "required" } :weight "97")]]
-                                [:br]
-                                [:div {:class "form-group"}
-                                 (form/label {:class "reg-label control-label col-md-2"} "activity" "activity:")
-                                 [:div.col-md-9
-                                  (form/text-field  {:class "form-control" :required "required" } :activity "1")]]
-                                [:br]
-                                (form/submit-button {:class "btn btn-info col-md-offset-6"} "Generate"))
-                ;..
+                [:form { :style "margin-top:5em;margin-left:25%;max-width:50%;", :class "form-horizontal " ,:action "/report", :method "POST"}
+
+                 [:div {:class "form-group"}
+                  [:label {:class "control-label col-sm-2", :for "age" } "Age:"]
+                  [:div {:class "col-sm-10"}
+                   [:input {:type "text", :value 30 :class "form-control",:required "required", :name "age", :placeholder "Enter your age"} ]]]
+                 [:div {:class "form-group"}
+                  [:label {:class "control-label col-sm-2", :for "gender"} "Gender:"]
+                  [:div {:class "col-sm-10"}
+                   [:input {:type "text", :class "form-control",:required "required",:value "male", :name "gender",  :placeholder "Enter your gender [male/female]"}]]]
+
+                 [:div {:class "form-group"}
+                  [:label {:class "control-label col-sm-2", :for "height"} "Height:"]
+                  [:div {:class "col-sm-10"}
+                   [:input {:type "number", :class "form-control",:required "required", :name "height",:value 188 :placeholder "Enter your height"} ]]]
+
+                 [:div {:class "form-group"}
+                  [:label {:class "control-label col-sm-2", :for "weight"} "Weight:"]
+                  [:div {:class "col-sm-10"}
+                   [:input {:type "number", :class "form-control",:required "required", :name "weight",:value 88 :placeholder "Enter your weight"} ]]]
+                 [:div {:class "form-group"}
+                  [:label {:class "control-label col-sm-2", :for "activity"} "Activity:"]
+                  [:div {:class "col-sm-10"}
+                   [:input {:type "number", :class "form-control",:required "required", :name "activity", :value 1 :placeholder "Enter your activity"} ]]]
+
+
+                 [:div {:class "form-group"}
+                  [:div {:class "col-sm-offset-2 col-sm-10"}
+                   [:button {:type "submit", :class "btn btn-default"} "Submit"]]]
+                 ]
+
 
                  ))
 
 (defn print-report [report]
   (vutil/common "Home page"
                 (vutil/navbar)
-([:label {:class "control-label col-sm-2", :for "pwd"} "Password:"])
+                [:div {:class "text-center "}
+                 [:p [:b "Total calories:  "](Math/round (:total-calories report))]
+                 [:table {:class "table table-bordered table-responsive",:style "width:50%; margin-left:25%;" }
+                  [:thead
+                   [:tr
+                    [:th "Carbohydrates"]
+                    [:th "Protein"]
+                    [:th "Fats"]]]
+                  [:tbody
+                   [:tr
+                    [:td (:uh (:nutrient-percentage report))]
+                    [:td (:p (:nutrient-percentage report))]
+                    [:td (:f (:nutrient-percentage report))]]]]
+                 ]
                 ))
 ;..
