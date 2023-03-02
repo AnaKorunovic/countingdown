@@ -1,5 +1,6 @@
 (ns logic.logic
-  (:require [logic.csv-logic :as csv]))
+  (:require [logic.csv-logic :as csv]
+            [clojure.math :as math]))
 
 
 ;Men: BMR = 66 + (13.7 x wt in kg) + (5 x ht in cm) - (6.8 x age in years)
@@ -39,7 +40,9 @@
   (let [cal (calculate-calorie-intake age gender height weight activity) ]
     {:total-calories cal
      :nutrient-percentage (logic.logic/calculate-percentage cal)
-     ; :breakfast (logic.logic/make-breakfast (* cal 0.3))
+      :breakfast (logic.logic/make-breakfast (* cal 0.3))
+     :lunch (logic.logic/make-lunch (* cal 0.4))
+     :dinner (logic.logic/make-dinner (* cal 0.3))
      })
   )
 
@@ -55,10 +58,8 @@
   (filter #(< (read-string (:Calories %)) max) csv/data))
 
 (defn get-random-by-group [group]
-  (take 1 (random-sample 0.1 (filter-by-group  group)))
+  (first  (take 1 (random-sample 0.1 (filter-by-group  group))))
   )
-
-
 
 (defn get-random-by-group-15 [group]
   (take 15 (random-sample 0.1 (filter-by-group  group)))
@@ -130,11 +131,29 @@
 
 (defn make-breakfast [calories]
   (let [egg (get-random-by-group "Egg") baked-foods (get-random-by-group "Baked Foods")]
-       {:egg (get-random-by-group "Egg")
-        :bread (get-random-by-group "Baked Foods")}
+       {:egg (str (:name egg) " - " (math/round
+               (/ (* calories 0.6 100) (read-string(:Calories egg)))) )      ;0.6% total kcal egg  ;100g:Ykcal-u-egg=xg-egg:calories
+        :bread (str (:name baked-foods) " - " (math/round(/ (* calories 0.4 100) (read-string(:Calories baked-foods)))))}    ;0.4% total kcal baked-food
   )
 )
-(make-breakfast 2300)
+
+(defn make-lunch [calories]
+  (let [meats (get-random-by-group "Meats") fruit (get-random-by-group "Fruits")]
+    {:meats (str (:name meats) " - " (math/round
+            (/ (* calories 0.7 100) (read-string(:Calories meats)))))
+     :fruits (str (:name fruit) " - " (math/round(/ (* calories 0.3 100) (read-string(:Calories fruit)))))}
+    )
+  )
+
+(defn make-dinner [calories]
+  (let [meal (get-random-by-group "Prepared Meals") snacks (get-random-by-group "Snacks")]
+    {:meal (str (:name meal) " - " (math/round
+              (/ (* calories 0.7 100) (read-string(:Calories meal)))))
+     :snacks (str (:name snacks) " - " (math/round(/ (* calories 0.3 100) (read-string(:Calories snacks)))))}
+    )
+  )
+
+
 
 ;
 ;25-30% of daily calories for breakfast ->0.25

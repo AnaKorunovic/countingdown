@@ -57,8 +57,15 @@
                     [:td (:uh (:nutrient-percentage report))]
                     [:td (:p (:nutrient-percentage report))]
                     [:td (:f (:nutrient-percentage report))]]]]
-                 [:h3 "Breakfast "
-                  [:span {:class "label label-default"} (str "Egg - " ( :egg (:breakfast report)) "g")]]
-                 ]
+                 [:h3 "Breakfast  "
+                   [:span {:class "label label-default"} (str "Egg - " ( :egg (:breakfast report)) "g\n")] [:br]
+                   [:span {:class "label label-default"} (str "Baked food - " (:bread (:breakfast report)) "g")]]
+                 [:h3 "Lunch  "
+                  [:span {:class "label label-default"} (str "Main dish - " ( :meats (:lunch report)) "g\n")][:br]
+                  [:span {:class "label label-default"} (str "Dessert - " (:fruits (:lunch report)) "g")]]
+                 [:h3 "Dinner  "
+                  [:span {:class "label label-default"} (str "Main dish - " ( :meal (:dinner report)) "g")] [:br]
+                  [:span {:class "label label-default"} (str "Snacks - " (:snacks (:dinner report)) "g")] ]]
+
                 ))
 ;..
