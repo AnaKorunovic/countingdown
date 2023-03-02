@@ -38,7 +38,9 @@
 (defn get-report [age gender height weight activity]
   (let [cal (calculate-calorie-intake age gender height weight activity) ]
     {:total-calories cal
-     :nutrient-percentage (logic.logic/calculate-percentage cal)})
+     :nutrient-percentage (logic.logic/calculate-percentage cal)
+     ; :breakfast (logic.logic/make-breakfast (* cal 0.3))
+     })
   )
 
 
@@ -82,9 +84,10 @@
 (defn get-all-data []
  csv/data )
 
-(defn get-data []
-  (take 10 csv/data ))
-(get-all-data)
+(defn get-data-recipes []
+ (csv/get-csv-data "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\Recepies.csv")
+  )
+
 
 ;(defn get-random-by-group-01 [group]
 ;(take 1 (random-sample 0.01 (filter-by-group (csv/get-csv-data) group)))
@@ -93,28 +96,25 @@
 ;(time (get-random-by-group "Egg"))
 ;(time (get-random-by-group-01 "Egg"))                       ;small difference in time - results are different each time
 
-
-
-
-
-
-
-
-
-
-(filter-by-group-kcal-range (csv/get-csv-data) "Prepared Meals" 300 600)
-(calculate-percentage (* 0.4 2000))
-(time (csv/get-csv-data)) ;
-(time csv/data)           ;manje vremena treba da se ucita
-(time (get-random-by-group-15 "Egg") )                      ;12.123msec
+;(filter-by-group-kcal-range (csv/get-csv-data) "Prepared Meals" 300 600)
+;(calculate-percentage (* 0.4 2000))
+;(time (csv/get-csv-data)) ;
+;(time csv/data)           ;manje vremena treba da se ucita
+;(time (get-random-by-group-15 "Egg") )                      ;12.123msec
 ; manjam poziv funkcije za ATOM
-(time (get-random-by-group-15 "Egg"))                       ;2.43msec
-(get-random-by-group "Egg")                                 ;Definisanjem data u logic ubrzalo se ucitavanje tabela
+;(time (get-random-by-group-15 "Egg"))                       ;2.43msec
+;(get-random-by-group "Egg")                                 ;Definisanjem data u logic ubrzalo se ucitavanje tabela
 
 ;*****************CREATION PERSONAL MEALS FROM DATABASE FOOD******************************
 (defn add-new-meal [data]
-  (let [row (str (:Name data) "," (:Calories data))]
-    (csv/add-data-to-csv "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\Recepies.csv" row))
+  (let [category (case (:category data)
+                   "1" "breakfast"
+                   "2" "lunch"
+                   "3" "dinner")]
+    (let [row (str (:name data) "," category "," (:ing data))]
+      (csv/add-data-to-csv "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\Recepies.csv" row))
+
+    )
   )
 
 
@@ -127,6 +127,15 @@
 ;35-40% of daily calories for lunch (0.35-0.4) ->0.4
 ;25-35% of daily calories for dinner (0.25-0.35) ->0.3
 ;If you eat four meals a day, you should consume:
+
+(defn make-breakfast [calories]
+  (let [egg (get-random-by-group "Egg") baked-foods (get-random-by-group "Baked Foods")]
+       {:egg (get-random-by-group "Egg")
+        :bread (get-random-by-group "Baked Foods")}
+  )
+)
+(make-breakfast 2300)
+
 ;
 ;25-30% of daily calories for breakfast ->0.25
 ;5-10% of daily calories for morning snack ->0.05
@@ -141,11 +150,6 @@
 ;15-20% of daily calories for dinner ->0.2
 
 
-(defn make-breakfast [calories]
-  (let [egg (get-random-by-group "Egg") baked-foods (get-random-by-group "Baked Foods")]
-
-    )
-  )
 
 
 

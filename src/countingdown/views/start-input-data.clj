@@ -57,6 +57,8 @@
                     [:td (:uh (:nutrient-percentage report))]
                     [:td (:p (:nutrient-percentage report))]
                     [:td (:f (:nutrient-percentage report))]]]]
+                 [:h3 "Breakfast "
+                  [:span {:class "label label-default"} (str "Egg - " ( :egg (:breakfast report)) "g")]]
                  ]
                 ))
 ;..

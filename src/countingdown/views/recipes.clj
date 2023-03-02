@@ -2,20 +2,37 @@
   (:require
     [view.view-utility :as vutil]
     [compojure.core :refer :all]
+    [hiccup.form :as form]
     ))
 
 
 
-(defn get-data-page []
+(defn get-data-page [data]
   "table - recipes"
   (vutil/common "Recipes"
                 (vutil/navbar)
                 [:div {:class "btn-group btn-group-justified"}
                  [:a {:href "http://localhost:3002/addmeal", :class "btn btn-default"} "Add new recipe"]
                  ]
-                ;...
+                [:div {:class "m-5 pb-5 container", :style "margin-top:2em;"}
+                 [:table {:class "table table-bordered"}
+                  [:thead
+                   [:tr
+                    [:th "Name"]
+                    [:th "Category"]
+                    [:th "Ingredients"]
+                    ]]
+                  [:tbody
+
+                   (for [i data][:tr
+                                 [:td (:name i)]
+                                 [:td (:category i)]
+                                 [:td (:ingredients i) ]
+                                ])
+                   ]]]
                 ))
 
+(def categories [["Breakfast" 1]["Lunch" 2 ]["Dinner" 3]])
 (defn get-add-recipe-page []
   "add new recipe"
   (vutil/common "Add new recipe"
@@ -25,37 +42,26 @@
                  [:div {:class "form-group"}
                   [:label {:class "control-label col-sm-2", :for "name"} "Name:"]
                   [:div {:class "col-sm-10"}
-                   [:input {:type "text", :class "form-control", :id "name", :placeholder "Enter meal name"}]]]
+                   [:input {:type "text", :class "form-control", :name "name", :placeholder "Enter meal name"}]]]
+
                  [:div {:class "form-group"}
                   [:label {:class "control-label col-sm-2", :for "category"} "Category:"]
                   [:div {:class "col-sm-10"}
-                   [:input {:type "number", :class "form-control", :id "category", :placeholder "Enter meal category [breakfast/lunch/dinner/snacks]"}]]]
+                   (form/drop-down {:class "form-class btn-sm btn-primary dropdown-toggle dropdown-toggle-split"} "category" categories)]]
+
+                 [:div {:class "form-group"}
+                  [:label {:class "control-label col-sm-2", :for "Ingredients"} "ingredients:"]
+                  [:div {:class "col-sm-10"}
+                   [:input {:type "text", :class "form-control input-lg", :name "ing", :placeholder "Enter your recipe"}]]]
+
+
                  [:div {:class "form-group"}
                   [:div {:class "col-sm-offset-2 col-sm-10"}
                    [:button {:type "submit", :class "btn btn-default"} "Submit"]]]
                  ]
                 ))
 
-(defn get-data-add-page []
-  "add new recipe"
-  (vutil/common "Add new recipe"
-                (vutil/navbar)
-                [:h1 "Add a Location"]
-                [:form {:action "/addmeal" :method "POST"}
-
-                 [:p "x value: " [:input {:type "text" :name "x"}]]
-                 [:p "y value: " [:input {:type "text" :name "y"}]]
-                 [:p [:input {:type "submit" :value "submit location"}]]]
-                ))
 
 
-
-(defn page [{:keys [x y]}]
-  "XXXXXXX"
-  (vutil/common "XXXX"
-                (vutil/navbar)
-                [:label (str (str x) "-----" y)]
-                ;...
-                ))
 
 

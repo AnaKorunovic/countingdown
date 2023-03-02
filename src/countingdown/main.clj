@@ -8,5 +8,5 @@
 (defn -main [& args]
   (jetty/run-jetty (fn [req] (handler/handler req)) {:port 3002 :join? false}))
 
-
+(countingdown.main/-main)
 
