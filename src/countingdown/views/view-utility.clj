@@ -14,9 +14,7 @@
              "width=device-width, initial-scale=1, maximum-scale=1"}]
      [:title title]
      (h/include-css "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-                    "../style.css"  )
-     ]
-
+                    "../style.css"  )]
     [:body {:style "height:100%"}
      [:div.wrapper
       [:div.middle
@@ -33,32 +31,8 @@
     [:ul.nav.navbar-nav
      [:li.active [:a {:href "/food"} "FoodBase" ]]
      [:li.active [:a {:href "/recipes"} "Recipes" ]]
-     ;another links
-     ]
-    ;...
-      (list
-        [:ul.nav.navbar-nav.navbar-right
-         [:li
-          ;(form/form-to  {:role "form" :id "search-form" :class "form-inline"}[:post "/"]
-          ;
-          ;               (form/text-field {:class "form-control" :placeholder "search"} :search "")
-          ;               (form/submit-button {:class "btn" }
-          ;                                   "Search"
-          ;                                   ))
-          ]
-         [:li [:a {:href "/register"}
-               [:span.glyphicon.glyphicon-user]
-               "Sign up"]]
-         [:li [:a {:href "/login"}
-               [:span.glyphicon.glyphicon-log-in]
-               "Login"]]
-         ])
-      ;)
-    ]]
-
-  )
-
-
-;...
-
-
+     (list
+       [:ul.nav.navbar-nav.navbar-right
+        [:li [:a {:href "/login"}[:span.glyphicon.glyphicon-log-in] "Login"]]
+        [:form {:action "/logout", :method "post"}
+         [:input {:type "submit", :value "Logout"}]]])]]])

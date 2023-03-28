@@ -13,7 +13,8 @@
    [:paragraph "yet more text"]]
   "doc.pdf")
 
-(defn pdf [report]
+(defn pdf
+  [report]
   (pdf/*pdf-writer*
     [{}
      [:phrase {:style :bold} "A report"]

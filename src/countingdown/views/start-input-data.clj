@@ -3,12 +3,14 @@
             [view.view-utility :as vutil]
             ))
 
+
+(def activities [["Sedentary" 1]["Lightly active" 2 ]["Moderately active" 3]["Very active" 4]["Extra active" 5]])
+
 (defn get-data-page []
   "get data and print report"
   (vutil/common "Home page"
                  (vutil/navbar)
                 [:form { :style "margin-top:5em;margin-left:25%;max-width:50%;", :class "form-horizontal " ,:action "/report", :method "POST"}
-
                  [:div {:class "form-group"}
                   [:label {:class "control-label col-sm-2", :for "age" } "Age:"]
                   [:div {:class "col-sm-10"}
@@ -17,12 +19,10 @@
                   [:label {:class "control-label col-sm-2", :for "gender"} "Gender:"]
                   [:div {:class "col-sm-10"}
                    [:input {:type "text", :class "form-control",:required "required",:value "male", :name "gender",  :placeholder "Enter your gender [male/female]"}]]]
-
                  [:div {:class "form-group"}
                   [:label {:class "control-label col-sm-2", :for "height"} "Height:"]
                   [:div {:class "col-sm-10"}
                    [:input {:type "number", :class "form-control",:required "required", :name "height",:value 188 :placeholder "Enter your height"} ]]]
-
                  [:div {:class "form-group"}
                   [:label {:class "control-label col-sm-2", :for "weight"} "Weight:"]
                   [:div {:class "col-sm-10"}
@@ -30,16 +30,10 @@
                  [:div {:class "form-group"}
                   [:label {:class "control-label col-sm-2", :for "activity"} "Activity:"]
                   [:div {:class "col-sm-10"}
-                   [:input {:type "number", :class "form-control",:required "required", :name "activity", :value 1 :placeholder "Enter your activity"} ]]]
-
-
+                   (form/drop-down {:class "form-class btn-sm btn-primary dropdown-toggle dropdown-toggle-split"} "activity" activities)]]
                  [:div {:class "form-group"}
                   [:div {:class "col-sm-offset-2 col-sm-10"}
-                   [:button {:type "submit", :class "btn btn-default"} "Submit"]]]
-                 ]
-
-
-                 ))
+                   [:button {:type "submit", :class "btn btn-default"} "Submit"]]]]))
 
 (defn print-report [report]
   (vutil/common "Home page"
@@ -65,7 +59,4 @@
                   [:span {:class "label label-default"} (str "Dessert - " (:fruits (:lunch report)) "g")]]
                  [:h3 "Dinner  "
                   [:span {:class "label label-default"} (str "Main dish - " ( :meal (:dinner report)) "g")] [:br]
-                  [:span {:class "label label-default"} (str "Snacks - " (:snacks (:dinner report)) "g")] ]]
-
-                ))
-;..
+                  [:span {:class "label label-default"} (str "Snacks - " (:snacks (:dinner report)) "g")] ]]))

@@ -1,6 +1,7 @@
 (ns logic.logic
   (:require [logic.csv-logic :as csv]
-            [clojure.math :as math]))
+            [clojure.math :as math]
+            [clojure.string :as s]))
 
 
 ;Men: BMR = 66 + (13.7 x wt in kg) + (5 x ht in cm) - (6.8 x age in years)
@@ -13,86 +14,65 @@
 ;Extra active = BMR x 1.9 (hard exercise 2 or more times per day, or training for
 ;                               marathon, or triathlon, etc.
 
-(defn calculate-bmi [age gender height weight]
+(defn calculate-bmi
+  [age gender height weight]
   (if (= gender "men") (- (+ 66 (* 13.7 weight) (* 5 height)) (* 6.8 age))
-                       (- (+ 655 (* 9.6 weight) (* 1.8 height)) (* 4.7 age)))
-  )
+                       (- (+ 655 (* 9.6 weight) (* 1.8 height)) (* 4.7 age))))
 
-(defn calculate-calorie-intake [age gender height weight activity]
+(defn calculate-calorie-intake
+  [age gender height weight activity]
   (let [bmi (logic.logic/calculate-bmi age gender height weight)]
     (case activity
       1 (* bmi 1.2)
       2 (* bmi 1.375)
       3 (* bmi 1.55)
       4 (* bmi 1.725)
-      5 (* bmi 1.9)))
-  )
-
-
-
+      5 (* bmi 1.9))))
 
 ;40UH 30Protein 30Fats
 ;1g uh/p=4kcal  1g f=9kcal
-(defn calculate-percentage [cal]
+(defn calculate-percentage
+  [cal]
   {:uh (int (/ (* cal 0.4) 4)) :p (int (/ (* cal 0.3) 4)) :f (int (/ (* cal 0.3) 9))})
 
-(defn get-report [age gender height weight activity]
-  (let [cal (calculate-calorie-intake age gender height weight activity) ]
-    {:total-calories cal
-     :nutrient-percentage (logic.logic/calculate-percentage cal)
-      :breakfast (logic.logic/make-breakfast (* cal 0.3))
-     :lunch (logic.logic/make-lunch (* cal 0.4))
-     :dinner (logic.logic/make-dinner (* cal 0.3))
-     })
-  )
-
-
 ;filter, sorting, random functions
-(defn filter-by-group [group]
-  (filter #(= (:FoodGroup %) group) csv/data))
+;data kao ulazni argument
+(defn filter-by-group
+  [group]
+  (filter #(= (:FoodGroup %) group) csv/food))
 
-(defn filter-by-calorie-range [data min max]
-  (filter #(and (> (read-string (:Calories %)) min) (< (read-string (:Calories %)) max)) data))
+(defn filter-by-calorie-range
+  [data min max]
+  (filter #(and (> (:Calories %) min) (< (:Calories %) max)) data))
 
-(defn filter-by-calorie-max [max]
-  (filter #(< (read-string (:Calories %)) max) csv/data))
+(defn filter-by-calorie-max-min
+  [operator number]
+  (filter #(operator (:Calories %) number) csv/food))
 
-(defn get-random-by-group [group]
-  (first  (take 1 (random-sample 0.1 (filter-by-group  group))))
-  )
+(defn filter-by-name
+  [name]
+  (filter #(true? (s/includes? (:name %) name) ) csv/food))
 
-(defn get-random-by-group-15 [group]
-  (take 15 (random-sample 0.1 (filter-by-group  group)))
-  )
+(defn get-random-by-group
+  [group]
+  (rand-nth (filter-by-group group)))
 
-
-(defn filter-by-group-kcal-range [group kcal-min kcal-max]
-  (filter-by-calorie-range (filter-by-group group) kcal-min kcal-max))
-
-
-
-(defn sort-desc [data]
+(defn sort-desc
+  [data]
   (sort-by :Calories data))
 
 ;parsing id to integer
-(defn parse-int [s]
+(defn parse-int
+  [s]
   (Integer. (re-find  #"\d+" s )))
 
+(defn get-all-data
+  []
+  (csv/food))
 
-(defn make-key-integer [data]
-  (update data :ID (5)))
-
-(defn get-all-data []
- csv/data )
-
-(defn get-data-recipes []
- (csv/get-csv-data "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\Recepies.csv")
-  )
-
-
-;(defn get-random-by-group-01 [group]
-;(take 1 (random-sample 0.01 (filter-by-group (csv/get-csv-data) group)))
-;)
+(defn get-data-recipes
+  []
+  (csv/get-data (csv/read-csv "Recepies.csv")))
 
 ;(time (get-random-by-group "Egg"))
 ;(time (get-random-by-group-01 "Egg"))                       ;small difference in time - results are different each time
@@ -106,60 +86,55 @@
 ;(time (get-random-by-group-15 "Egg"))                       ;2.43msec
 ;(get-random-by-group "Egg")                                 ;Definisanjem data u logic ubrzalo se ucitavanje tabela
 
+
 ;*****************CREATION PERSONAL MEALS FROM DATABASE FOOD******************************
-(defn add-new-meal [data]
+(defn add-new-meal
+  [data]
   (let [category (case (:category data)
                    "1" "breakfast"
                    "2" "lunch"
                    "3" "dinner")]
     (let [row (str (:name data) "," category "," (:ing data))]
-      (csv/add-data-to-csv "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\Recepies.csv" row))
-
-    )
-  )
-
-
-
+      (csv/write-csv "Recepies.csv" row))))
 
 ;****************GENERATION MENU**********************************************************
-;If you eat three meals a day, you should consume:
-;
-;30-35% of daily calories for breakfast (0.3-0.35)->0.3
-;35-40% of daily calories for lunch (0.35-0.4) ->0.4
-;25-35% of daily calories for dinner (0.25-0.35) ->0.3
-;If you eat four meals a day, you should consume:
 
 (defn make-breakfast [calories]
   (let [egg (get-random-by-group "Egg") baked-foods (get-random-by-group "Baked Foods")]
-       {:egg (str (:name egg) " - " (math/round
-               (/ (* calories 0.6 100) (read-string(:Calories egg)))) )      ;0.6% total kcal egg  ;100g:Ykcal-u-egg=xg-egg:calories
-        :bread (str (:name baked-foods) " - " (math/round(/ (* calories 0.4 100) (read-string(:Calories baked-foods)))))}    ;0.4% total kcal baked-food
-  )
-)
+    {:egg {:name (:name egg)
+           :amount (math/round (/ (* calories 0.6 100) (:Calories egg)))},
+     :bread {:name (:name baked-foods)
+             :amount (math/round(/ (* calories 0.4 100) (:Calories baked-foods)))}}))
 
-(defn make-lunch [calories]
+(defn make-lunch
+  [calories]
   (let [meats (get-random-by-group "Meats") fruit (get-random-by-group "Fruits")]
-    {:meats (str (:name meats) " - " (math/round
-            (/ (* calories 0.7 100) (read-string(:Calories meats)))))
-     :fruits (str (:name fruit) " - " (math/round(/ (* calories 0.3 100) (read-string(:Calories fruit)))))}
-    )
-  )
+    {:meats {:name (:name meats)
+           :amount (math/round (/ (* calories 0.7 100) (:Calories meats)))},
+     :fruits {:name (:name fruit)
+             :amount (math/round(/ (* calories 0.3 100) (:Calories fruit)))}}))
 
 (defn make-dinner [calories]
   (let [meal (get-random-by-group "Prepared Meals") snacks (get-random-by-group "Snacks")]
-    {:meal (str (:name meal) " - " (math/round
-              (/ (* calories 0.7 100) (read-string(:Calories meal)))))
-     :snacks (str (:name snacks) " - " (math/round(/ (* calories 0.3 100) (read-string(:Calories snacks)))))}
-    )
+    {:meal {:name (:name meal)
+            :amount (math/round (/ (* calories 0.7 100) (:Calories meal)))},
+     :snacks {:name (:name snacks)
+              :amount (math/round(/ (* calories 0.3 100) (:Calories snacks)))}}))
+
+(defn get-report [age gender height weight activity]
+  (let [cal (calculate-calorie-intake age gender height weight activity) ]
+    {:total-calories cal
+     :nutrient-percentage (calculate-percentage cal)
+     :breakfast (make-breakfast (* cal 0.3))
+     :lunch (make-lunch (* cal 0.4))
+     :dinner (make-dinner (* cal 0.3))
+     })
   )
 
-
-
-;
 ;25-30% of daily calories for breakfast ->0.25
-;5-10% of daily calories for morning snack ->0.05
 ;35-40% of daily calories for lunch ->0.40
-;25-30% of daily calories for dinner ->0.30
+;25-35% of daily calories for dinner ->0.35
+
 ;If you eat five meals a day, you should consume:
 ;
 ;25-30% of daily calories for breakfast ->0.3
@@ -170,5 +145,10 @@
 
 
 
+;vise korisnika - sesija, odvajanje memorijskog prostora izmedju korisnika - transakcije - baza podataka
+;elestic search
+;mapa sa kljucevima food groupa, pa ce svaka da ima listu keyeva-id
+;testovi - junit
 
 
+;diatary requirements

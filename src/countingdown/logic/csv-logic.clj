@@ -5,28 +5,47 @@
            ))
 
 (defn read-csv
-  "Read data from file."
-  [fname]
-  (with-open [file (io/reader fname)]
-    (-> file
-        (slurp)
-        (csv/parse-csv))))
+  "Read data from csv file."
+  [file-name]
+  (with-open [file (io/reader file-name)]
+    (csv/parse-csv (slurp file))))
 
-(defn add-data-to-csv [location data]
-  (with-open [w (io/writer  location :append true)]
+(defn write-csv [file-name data]
+  (with-open [w (io/writer  file-name :append true)]
     (.write w (str "\n" data)))
   )
 
+(defn get-data
+  [row-data]
+  (map #(zipmap (map keyword (first row-data)) %)
+       (rest row-data)))
 
-(defn get-csv-data [location]
-  (map #(-> (zipmap (first (read-csv location)) %)
-            (walk/keywordize-keys))
-       (rest (read-csv location)))
-  )
+(defn change-type-food
+  [food]
+  (map #(assoc % :ID (read-string(:ID %))
+                 :Calories (read-string(:Calories %))
+                 :Fat (read-string(:Fat %))
+                 :Protein (read-string(:Protein %))
+                 :Carbohydrate (read-string(:Carbohydrate %))) food))
 
-(def data (get-csv-data "C:\\Users\\LENOVO\\Documents\\FON\\MASTER\\Alati i metode\\projekti\\countingdown\\src\\countingdown\\MyFoodData1.csv"))
+(def food (change-type-food (get-data (read-csv "MyFoodData1.csv"))))
 
+(defn keywordize-data-ID
+  [data]
+  (reduce (fn [acc f]
+            (assoc acc (:ID f) f))
+          {} data))
 
+;(get (keywordize-data-ID food) 5780)
+
+#_(defn keywordize-data1
+  [param data]
+  (zipmap (map param data) data))
+
+;(apply hash-map (zipmap (map :ID food) food))
+(time (count (reduce (fn [acc f]
+          (assoc acc (:ID f) f))
+        {} food)))
 
 ;(defn cast-calories [map]
 ;  (assoc map :Calories (read-string (:Calories map)))
@@ -36,6 +55,12 @@
 ;  (mapv %(cast-calories) data)
 ;  (first data))
 
-
+(for [i food][:tr
+              [:td (:name i)]
+              [:td (:FoodGroup i)]
+              [:td (:Calories i) ]
+              [:td (:Protein i)]
+              [:td (:Carbohydrate i) ]
+              [:td (:Fat i) ]])
 
 

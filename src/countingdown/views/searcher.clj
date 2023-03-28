@@ -1,12 +1,8 @@
 (ns view.searcher
-  (:require
-            [view.view-utility :as vutil]
+  (:require [view.view-utility :as vutil]
             [compojure.core :refer :all]
             [hiccup.page :as h]
-            [hiccup.form :as form]
-            ))
-
-
+            [hiccup.form :as form]))
 
 (defn get-data-page [data]
   "table - search page"
@@ -22,11 +18,15 @@
                  ]
                 [:div {:class "m-5 pb-5 container", :style "margin-top:1em;"}
                  [:div
-                  [:form {:action "/search" :method "POST"}
-                   [:label {:for "maxCal"} "Max Calories:"]
+                  [:form {:action "/search/max" :method "POST"}
+                   [:label {:for "maxCal"  :style "margin-right:1em;"} "Max Calories:"]
                    [:input {:type "number", :id "maxCal", :name "maxCal"}]
+                   [:input {:type "submit"}]]]
+                 [:div
+                  [:form {:action "/search/name" :method "POST"}
+                   [:label {:for "name" :style "margin-right:4.4em;"} "Name:"]
+                   [:input {:type "text", :id "name", :name "name"}]
                    [:input {:type "submit"}]]]]
-
                 [:div {:class "m-5 pb-5 container", :style "margin-top:2em;"}
                  [:table {:class "table table-bordered"}
                   [:thead
@@ -38,16 +38,13 @@
                     [:th "Carbs"]
                     [:th "Fat"]]]
                   [:tbody
-
                    (for [i data][:tr
                                  [:td (:name i)]
                                  [:td (:FoodGroup i)]
                                  [:td (:Calories i) ]
                                  [:td (:Protein i)]
                                  [:td (:Carbohydrate i) ]
-                                 [:td (:Fat i) ]])
-                   ]]]
-                ))
+                                 [:td (:Fat i) ]])]]]))
 
 
 
