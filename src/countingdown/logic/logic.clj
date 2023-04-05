@@ -15,17 +15,19 @@
 ;                               marathon, or triathlon, etc.
 
 (defn only-digits
-  [string] (every? #(Character/isDigit %) string))
+  [string]
+  (every? #(Character/isDigit %) string))
 (defn is-blank
-  [string] (every? #(Character/isWhitespace %)  string))
+  [string]
+  (every? #(Character/isWhitespace %)  string))
 
 (defn validate-input [age gender height weight]
   (str
     (when (or (is-blank age) (is-blank gender) (is-blank (str height)) (is-blank (str weight))) "You must fill all fields. ")
-    (when-not (only-digits (clojure.string/replace (str age)  #"\." "")) "Age field must contains only digits. ")
+    (when-not (only-digits (clojure.string/replace (str age)  #"\." "")) "Age field must contains only digits.")
     (when (nil? age) "Age field must contain only digits. ")
-    (when-not (only-digits (clojure.string/replace (str height)  #"\." "")) "Height field must contains only digits. ")
-    (when-not (only-digits (clojure.string/replace (str weight)  #"\." "")) "Weight field must contains only digits. ")
+    (when-not (only-digits (clojure.string/replace (str height)  #"\." "")) "Height field must contains only digits.")
+    (when-not (only-digits (clojure.string/replace (str weight)  #"\." "")) "Weight field must contains only digits.")
     (when-not (or (= gender "male") (= "female" gender)) "Gender must be male or female")))
 
 (defn calculate-bmi
