@@ -33,6 +33,6 @@
      [:li.active [:a {:href "/recipes"} "Recipes" ]]
      (list
        [:ul.nav.navbar-nav.navbar-right
-        [:li [:a {:href "/login"}[:span.glyphicon.glyphicon-log-in] "Login"]]
-        [:form {:action "/logout", :method "post"}
+        [:li [:a {:href "/admin/login"}[:span.glyphicon.glyphicon-log-in] "Login"]]
+        [:form {:action "/admin/logout", :method "post"}
          [:input {:type "submit", :value "Logout"}]]])]]])

@@ -14,7 +14,15 @@
                  [clj-pdf "2.6.2"]
                  [buddy/buddy-auth "3.0.323"]
                  [buddy/buddy-hashers "1.4.0"]
+                 [ring/ring-mock "0.4.0"]
+                 [me.grison/cljwebauthn "0.1.2"]
                  [mysql/mysql-connector-java "8.0.30"]]
+  :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
+                                  [ring/ring-mock "0.3.2"]
+                                  [midje "1.10.9"]]
+                   :plugins [[lein-midje "3.2.1"]
+                             [criterium "0.4.6"]
+                             ]}}
   ;:repl-options {:init-ns countingdown.core}
   :resource-paths ["resources"]
   ;:main countingdown.main

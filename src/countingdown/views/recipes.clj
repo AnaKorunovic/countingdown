@@ -9,8 +9,7 @@
   (vutil/common "Recipes"
                 (vutil/navbar)
                 [:div {:class "btn-group btn-group-justified"}
-                 [:a {:href "http://localhost:3002/addmeal", :class "btn btn-default"} "Add new recipe"]
-                 ]
+                 [:a {:href "http://localhost:3002/admin/addmeal", :class "btn btn-default"} "Add new recipe"]]
                 [:div {:class "m-5 pb-5 container", :style "margin-top:2em;"}
                  [:table {:class "table table-bordered"}
                   [:thead

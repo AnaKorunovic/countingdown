@@ -14,6 +14,20 @@
 ;Extra active = BMR x 1.9 (hard exercise 2 or more times per day, or training for
 ;                               marathon, or triathlon, etc.
 
+(defn only-digits
+  [string] (every? #(Character/isDigit %) string))
+(defn is-blank
+  [string] (every? #(Character/isWhitespace %)  string))
+
+(defn validate-input [age gender height weight]
+  (str
+    (when (or (is-blank age) (is-blank gender) (is-blank (str height)) (is-blank (str weight))) "You must fill all fields. ")
+    (when-not (only-digits (clojure.string/replace (str age)  #"\." "")) "Age field must contains only digits. ")
+    (when (nil? age) "Age field must contain only digits. ")
+    (when-not (only-digits (clojure.string/replace (str height)  #"\." "")) "Height field must contains only digits. ")
+    (when-not (only-digits (clojure.string/replace (str weight)  #"\." "")) "Weight field must contains only digits. ")
+    (when-not (or (= gender "male") (= "female" gender)) "Gender must be male or female")))
+
 (defn calculate-bmi
   [age gender height weight]
   (if (= gender "men") (- (+ 66 (* 13.7 weight) (* 5 height)) (* 6.8 age))
@@ -143,12 +157,5 @@
 ;5-10% of daily calories for an afternoon snack ->0.05
 ;15-20% of daily calories for dinner ->0.2
 
-
-
-;vise korisnika - sesija, odvajanje memorijskog prostora izmedju korisnika - transakcije - baza podataka
-;elestic search
 ;mapa sa kljucevima food groupa, pa ce svaka da ima listu keyeva-id
-;testovi - junit
 
-
-;diatary requirements

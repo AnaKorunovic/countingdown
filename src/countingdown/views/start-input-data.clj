@@ -6,10 +6,12 @@
 
 (def activities [["Sedentary" 1]["Lightly active" 2 ]["Moderately active" 3]["Very active" 4]["Extra active" 5]])
 
-(defn get-data-page []
+(defn get-data-page
+  [& [message]]
   "get data and print report"
   (vutil/common "Home page"
                  (vutil/navbar)
+                (when message [:div.alert.alert-danger message])
                 [:form { :style "margin-top:5em;margin-left:25%;max-width:50%;", :class "form-horizontal " ,:action "/report", :method "POST"}
                  [:div {:class "form-group"}
                   [:label {:class "control-label col-sm-2", :for "age" } "Age:"]

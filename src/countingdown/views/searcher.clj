@@ -19,14 +19,14 @@
                 [:div {:class "m-5 pb-5 container", :style "margin-top:1em;"}
                  [:div
                   [:form {:action "/search/max" :method "POST"}
-                   [:label {:for "maxCal"  :style "margin-right:1em;"} "Max Calories:"]
+                   [:label {:for "maxCal" :style "margin-right:1em;"} "Max Calories:"]
                    [:input {:type "number", :id "maxCal", :name "maxCal"}]
-                   [:input {:type "submit"}]]]
-                 [:div
-                  [:form {:action "/search/name" :method "POST"}
-                   [:label {:for "name" :style "margin-right:4.4em;"} "Name:"]
-                   [:input {:type "text", :id "name", :name "name"}]
-                   [:input {:type "submit"}]]]]
+                   [:input {:type "submit"}]]
+                  [:div
+                   [:form {:action "/search/name" :method "POST"}
+                    [:label {:for "name" :style "margin-right:4.4em;"} "Name:"]
+                    [:input {:type "text", :id "name", :name "name"}]
+                    [:input {:type "submit"}]]]]]
                 [:div {:class "m-5 pb-5 container", :style "margin-top:2em;"}
                  [:table {:class "table table-bordered"}
                   [:thead
