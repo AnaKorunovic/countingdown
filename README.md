@@ -27,27 +27,27 @@ username: test password: test
 Admin credentials to log in are always:
 username: admin password: 12345
 
-##route "/register"
+## route "/register"
 The registration route contains a form for adding a new user that reports an error if there is already a user with the entered username.
 
-##route "/login"
+## route "/login"
 The login route contains a form for logging that reports an error if the username or password aren't correct. All fields in this form are required.
 
-##route "/food"
+## route "/food"
 On this route, there is a table with all the foods available in the application, sorted by the group they belong to. Some of the food groups are vegetables, meat, eggs, snacks, etc
 
-##route "/data"
+## route "/data"
 This route can only be accessed by a logged-in user. To generate the report, it is necessary to fill in all the form fields. Also, the age, height, and weight fields must be numbers, otherwise, the user will be notified of an error. The gender entry field must have the value male/female.If all fields aren't filled, the message "You must fill all fields" will be shown. If "age" filled contains letters, the message "Age field must contain only digits." will be shown. If "Height" filled contains letters, the message "Height field must contain only digits." will be shown, etc.
 At the click of a button, the user receives a personalized nutrition plan, the total number of calories to consumed, as well as the amount of protein, carbohydrates, and fats needed to achieve results.
 
-##route "/addmeal"
+## route "/addmeal"
 This route can only be accessed by a user with admin privileges. The functionality available at this route is adding a new recipe. The new recipe is saved in a .csv file, which can only be accessed by the admin.
 
-#Testing
+# Testing
 For testing, I used a "clojure.test" and Midje library. In the package test.countingdown.handler and test.countingdown.logic various tests cover the calls of the routes, as well as the logic of the application itself.
 
 
-#Problems I ran into
+# Problems I ran into
 
 While developing the application, I encountered several significant problems due to my inexperience. First of all, I had to get used to a completely new way of thinking and adopt the syntax of the Clojure programming language. At the beginning, it was necessary to find the development environment that I was most comfortable with and understand how it worked. Eventually I decided to use InteliJ IDEA environment.
 After taking small steps into the world of functional programming, I encountered the problem of sending POST requests where I failed to send data through the form (i.e. read it from the request body). I tried to solve this problem in countless ways, trying every solutions I found from stack overflow, studied various literature, but without success. Finally, I managed to find the answer on the stackoverflow website int this post: https://stackoverflow.com/questions/37397531/ring-read-body-of-a-http-request-as-string, but after many failed attempts.
@@ -58,11 +58,11 @@ In addition to sessions, user data also needed to be stored, so I decided to use
 The easiest stuff were testing and writing hiccup code for frontend.
 Although I had books available that contained an overview of the Clojure programming language, I learned the most from the mistakes and difficulties I had in developing the application.
 
-##Conclusion
+## Conclusion
 The development of the application took a long time, but I am glad that I learned a new programming language and a way of programming that I was not familiar with.
 As for my future plans, I would like to improve my knowledge of functional programminga a bit more.
 
-#References
+# References
 
 -Clojure For the Brave and True, Daniel Higginbotham
 -Web Development with Clojure, Dmitri Sotnikov
