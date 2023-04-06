@@ -30,9 +30,12 @@
      ]
     [:ul.nav.navbar-nav
      [:li.active [:a {:href "/food"} "FoodBase" ]]
+     [:li.active [:a {:href "/data"} "Generate menu" ]]
      [:li.active [:a {:href "/recipes"} "Recipes" ]]
      (list
        [:ul.nav.navbar-nav.navbar-right
-        [:li [:a {:href "/admin/login"}[:span.glyphicon.glyphicon-log-in] "Login"]]
-        [:form {:action "/admin/logout", :method "post"}
+        [:li [:a {:href "/login"}[:span.glyphicon.glyphicon-log-in] "Login"]]
+        [:li [:a {:href "/logout"}[:span.glyphicon.glyphicon-log-out] "Logout"]]
+        [:li [:a {:href "/register"}[:span.glyphicon.glyphicon-pencil] "Register"]]
+        #_[:form {:action "/admin/logout", :method "post"}
          [:input {:type "submit", :value "Logout"}]]])]]])
