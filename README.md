@@ -1,22 +1,10 @@
-# countingdown
+# countingdown application - owerview
 
-A Clojure library designed to ... well, that part is up to you.
+The application was developed for the needs of the subject "Alati i metode vestacke inteligencije". The goal of the application was primarily to master the Clojure programming language and its concepts. The main purpose of the application is to provide suggestions for the daily menu based on the age, height, weight, gender and activity of the user. In addition to the aforementioned functions, which are available to all users, an administrative function has also been introduced, which includes reviewing and adding recipes.
 
-## Usage
+## Functionalities:
+Basic:As mentioned above, all users can access the data entry form, based on which they will receive a daily menu proposal. The foods used in the diet plan are located in the .csv file, in which, in addition to the name of each food, its caloric value can be found. There is also a possibility to access the food database and search by specific criteria.
+Admin: If the user logs in as admin, he can access his recipe database, as well as add new recipe.
 
-FIXME
+## Application's routes
 
-## License
-
-Copyright © 2022 FIXME
-
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
-
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
