@@ -1,7 +1,10 @@
 (ns countingdown.logic-test
   (:require [clojure.test :refer :all]
             [logic.logic :refer :all]
-            [midje.sweet :refer [facts =>]]))
+            [db.users-db :as udb]
+            [logic.users-logic :as ul]
+            [midje.sweet :refer [facts =>]]
+            [logic.users-logic :as uad]))
 
 (facts "only-digits"
        (logic.logic/only-digits "123")=> true)
@@ -26,9 +29,30 @@
   (testing "If group name is invalid."
     (is (= (filter-by-group "invalid") ()))))
 
+(deftest test-check-credentials-user
+  "if user credential are true then it will return that user."
+  (testing "Check user"
+    (let [exists? (udb/user-exists? {:username "anak" :password "anak99"})]
+      (is (= exists? ({:id 2, :name "Ana", :username "anak", :password "anak99"}))))))
 
+(deftest test-check-credentials-admin
+  "if user credential are then it will return true"
+  (testing "check admin"
+    (let [exists? (ul/admin-exist? {:username "admin" :password "12345" })]
+      (is (= exists? true)))))
 
+(deftest test-get-next-id-user
+  "test should return next int id, that is > 0"
+  (testing "new id"
+    (let [next (udb/get-next-user-id)]
+      (is (= (integer? (udb/get-next-user-id)) true))
+      (is (> next 0)))))
 
+(deftest test-get-user-id-by-username-and-password
+  "Test if it will return user id greater than 0"
+  (testing "user-id-by-username-and-password"
+    (let [res (udb/get-user-id-by-username-and-password "anak" "anak99")]
+      (is (= (integer? (udb/get-user-id-by-username-and-password "anak" "anak99")) true))
+      (is (> res 0)))))
 
-
-(run-tests)
+;(run-tests)
